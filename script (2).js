@@ -1,5 +1,5 @@
 // Altere essa constante para a URL do seu Google Apps Script publicado
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxsU72yMJn0BEcbo6wvWHLemHIxL-0jFAGjJSCIAK4yEC2xC5yq5VBZmiRHDs4Rf5HMCg/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/library/d/1TYP1XjGVF_8XQ0vx8wJ83yLVgNYX384Los8jAHxOU6aprTi-2fBddTbj/2';
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', function () {
