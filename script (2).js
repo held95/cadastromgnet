@@ -1,3 +1,6 @@
+// Altere essa constante para a URL do seu Google Apps Script publicado
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxsU72yMJn0BEcbo6wvWHLemHIxL-0jFAGjJSCIAK4yEC2xC5yq5VBZmiRHDs4Rf5HMCg/exec';
+
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', function () {
     const target = this.dataset.tab;
@@ -12,39 +15,34 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 function cadastrar() {
   const medico = {
-    Nome: document.getElementById("nome").value,
-    CRM: document.getElementById("crm").value,
-    Endereço: document.getElementById("endereco").value,
-    "Dados Bancários": document.getElementById("dados").value,
-    CEP: document.getElementById("cep").value,
-    "Código do Banco": document.getElementById("codigo").value,
-    Agência: document.getElementById("agencia").value,
-    "Nome do Banco": document.getElementById("nomeBanco").value,
-    E-mail: document.getElementById("email").value,
-    WhatsApp: document.getElementById("whatsapp").value,
-    Hospitais: Array.from(document.querySelectorAll('#hospitais input[type="checkbox"]:checked')).map(cb => cb.value)
+    nome: document.getElementById("nome").value,
+    crm: document.getElementById("crm").value,
+    endereco: document.getElementById("endereco").value,
+    dadosBancarios: document.getElementById("dados").value,
+    cep: document.getElementById("cep").value,
+    codigoBanco: document.getElementById("codigo").value,
+    agencia: document.getElementById("agencia").value,
+    nomeBanco: document.getElementById("nomeBanco").value,
+    email: document.getElementById("email").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    hospitais: Array.from(document.querySelectorAll('#hospitais input[type="checkbox"]:checked')).map(cb => cb.value)
   };
 
-  console.log(medico);
-  alert("Cadastro concluído com sucesso!");
-
-  document.querySelectorAll("input").forEach(el => el.value = "");
-  document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
-}
-
-function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
-
-  sheet.appendRow([
-    data.nome,
-    data.email,
-    data.telefone,
-    data.especialidade,
-    data.localDeAtendimento
-  ]);
-
-  return ContentService.createTextOutput(
-    JSON.stringify({ status: 'success', message: 'Dados recebidos com sucesso!' })
-  ).setMimeType(ContentService.MimeType.JSON);
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors', // evita CORS error (modo limitado de resposta)
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(medico)
+  })
+    .then(() => {
+      alert("Cadastro enviado com sucesso!");
+      document.querySelectorAll("input").forEach(el => el.value = "");
+      document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+    })
+    .catch((error) => {
+      console.error('Erro ao enviar:', error);
+      alert("Erro ao enviar cadastro.");
+    });
 }
