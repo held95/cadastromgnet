@@ -57,7 +57,7 @@
       font-size: 24px;
     }
 
-    input[type="text"], input[type="password"], input[type="date"] {
+    input[type="text"], input[type="password"], input[type="date"], input[type="email"] {
       width: 100%;
       margin: 12px 0;
       padding: 14px;
@@ -67,7 +67,7 @@
       transition: all 0.3s ease;
     }
 
-    input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus {
+    input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="email"]:focus {
       border-color: #1abc9c;
       outline: none;
     }
@@ -203,7 +203,7 @@
       <label><input type="checkbox" value="AME PRADOS">AME PRADOS</label>
     </div>
 
-    <input type="text" placeholder="E-mail" id="email">
+    <input type="email" placeholder="E-mail" id="email">
     <input type="text" placeholder="WhatsApp" id="whatsapp">
 
     <label class="date-label" for="dataNascimento">Data de Nascimento</label>
@@ -258,16 +258,28 @@
 
     function cadastrarHospitais() {
       const selecionados = Array.from(document.querySelectorAll("#hospitais input[type='checkbox']:checked")).map(cb => cb.value);
-      const entrada = {
-        Hospitais: selecionados.join(", "),
-        Email: document.getElementById("email").value,
-        WhatsApp: document.getElementById("whatsapp").value,
-        "Data de Nascimento": document.getElementById("dataNascimento").value,
-        "Data de Emissão RG": document.getElementById("dataEmissaoRg").value
+
+      const dados = {
+        nome: document.getElementById("nome").value,
+        crm: document.getElementById("crm").value,
+        endereco: document.getElementById("endereco").value,
+        cep: document.getElementById("cep").value,
+        codigo: document.getElementById("codigo").value,
+        agencia: document.getElementById("agencia").value,
+        banco: document.getElementById("banco").value,
+        hospitais: selecionados.join(", "),
+        email: document.getElementById("email").value,
+        whatsapp: document.getElementById("whatsapp").value,
+        dataNascimento: document.getElementById("dataNascimento").value,
+        dataEmissaoRg: document.getElementById("dataEmissaoRg").value
       };
-      dadosHospitais.push(entrada);
+
+      dadosHospitais.push(dados);
+      enviarDados(dados);
+
       alert("Dados salvos!");
-      document.querySelectorAll("#hospitais input[type='checkbox'], #hospitais input[type='text'], #hospitais input[type='date']").forEach(el => {
+
+      document.querySelectorAll("#hospitais input[type='checkbox'], #hospitais input[type='text'], #hospitais input[type='email'], #hospitais input[type='date']").forEach(el => {
         if (el.type === "checkbox") el.checked = false;
         else el.value = "";
       });
@@ -292,7 +304,19 @@
       XLSX.writeFile(wb, `${tipo}_dados.xlsx`);
     }
 
-    // Mostrar arquivos selecionados
+    function enviarDados(dados) {
+      fetch("https://script.google.com/macros/s/AKfycbzZc9y5DCltJ3RwWkdLmgNiUTTIEDZCrKYIfOnMVhH1xth50eZQFvRDiCHrkAwywK5-Uw/exec", {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.text())
+      .then(data => console.log("Servidor respondeu:", data))
+      .catch(err => alert("Erro ao enviar: " + err));
+    }
+
     document.getElementById("arquivos").addEventListener("change", function () {
       const files = this.files;
       const fileList = document.getElementById("fileList");
@@ -305,3 +329,4 @@
 
 </body>
 </html>
+
