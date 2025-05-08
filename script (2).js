@@ -14,29 +14,41 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 
 function cadastrar() {
+  // Validação de campos obrigatórios
+  const nome = document.getElementById("nome").value;
+  const crm = document.getElementById("crm").value;
+  const email = document.getElementById("email").value;
+
+  if (!nome || !crm || !email) {
+    alert("Por favor, preencha todos os campos obrigatórios.");
+    return;
+  }
+
   const medico = {
-    nome: document.getElementById("nome").value,
-    crm: document.getElementById("crm").value,
+    nome: nome,
+    crm: crm,
     endereco: document.getElementById("endereco").value,
     dadosBancarios: document.getElementById("dados").value,
     cep: document.getElementById("cep").value,
     codigoBanco: document.getElementById("codigo").value,
     agencia: document.getElementById("agencia").value,
     nomeBanco: document.getElementById("nomeBanco").value,
-    email: document.getElementById("email").value,
+    email: email,
     whatsapp: document.getElementById("whatsapp").value,
     hospitais: Array.from(document.querySelectorAll('#hospitais input[type="checkbox"]:checked')).map(cb => cb.value)
   };
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors', // evita CORS error (modo limitado de resposta)
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(medico)
   })
-    .then(() => {
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao enviar dados.');
+      }
       alert("Cadastro enviado com sucesso!");
       document.querySelectorAll("input").forEach(el => el.value = "");
       document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
