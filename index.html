@@ -1,238 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Médicos</title>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f4f7fc;
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      background: #2c3e50;
-      color: white;
-      padding: 20px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .tab {
-      margin: 0 30px;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: 18px;
-      transition: all 0.3s ease;
-    }
-
-    .tab:hover {
-      color: #1abc9c;
-    }
-
-    .active {
-      border-bottom: 3px solid #1abc9c;
-      padding-bottom: 10px;
-    }
-
-    .form-container {
-      background: white;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 700px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    input[type="text"], input[type="password"], input[type="date"], input[type="email"] {
-      width: 100%;
-      margin: 12px 0;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="email"]:focus {
-      border-color: #1abc9c;
-      outline: none;
-    }
-
-    button {
-      background-color: #1abc9c;
-      color: white;
-      padding: 15px;
-      border: none;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #16a085;
-    }
-
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin: 15px 0;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-    }
-
-    .admin-area {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .admin-area input {
-      width: 80%;
-      margin-top: 12px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .footer {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    .upload-box {
-      margin: 20px 0;
-      padding: 20px;
-      border: 2px dashed #1abc9c;
-      border-radius: 10px;
-      background-color: #ecf9f8;
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .upload-box:hover {
-      background-color: #d1f3ed;
-    }
-
-    .upload-box input[type="file"] {
-      display: block;
-      margin: 10px auto;
-    }
-
-    #fileList {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #2c3e50;
-    }
-
-    label.date-label {
-      display: block;
-      margin-top: 15px;
-      font-weight: 500;
-      font-size: 16px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="tabs">
-    <div class="tab active" onclick="mostrarAba('cadastro')">Cadastros</div>
-    <div class="tab" onclick="mostrarAba('hospitais')">Hospitais</div>
-  </div>
-
-  <div id="cadastro" class="form-container">
-    <h2>Cadastro de Médicos</h2>
-    <input type="text" placeholder="Nome" id="nome">
-    <input type="text" placeholder="CRM" id="crm">
-    <input type="text" placeholder="Endereço" id="endereco">
-    <input type="text" placeholder="CEP" id="cep">
-    <input type="text" placeholder="Código do Banco" id="codigo">
-    <input type="text" placeholder="Agência" id="agencia">
-    <input type="text" placeholder="Nome do Banco" id="banco">
-    <button onclick="mostrarAba('hospitais')">Próximo</button>
-
-    <div class="admin-area">
-      <button onclick="mostrarSenha('cadastro')">Administrador</button>
-      <div id="senhaAreaCadastro" class="hidden">
-        <input type="password" id="senhaCadastro" placeholder="Senha">
-        <button onclick="baixarExcel('cadastro')">Download</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="hospitais" class="form-container hidden">
-    <h2>Hospitais</h2>
-    <div class="checkbox-group">
-      <label><input type="checkbox" value="OMED">OMED</label>
-      <label><input type="checkbox" value="HMB">HMB</label>
-      <label><input type="checkbox" value="HGP">HGP</label>
-      <label><input type="checkbox" value="PEDRE">PEDRE</label>
-      <label><input type="checkbox" value="REDE HC">REDE HC</label>
-      <label><input type="checkbox" value="AME CARAP">AME CARAP</label>
-      <label><input type="checkbox" value="H MULHER">H MULHER</label>
-      <label><input type="checkbox" value="HU SBC">HU SBC</label>
-      <label><input type="checkbox" value="M BOI">M BOI</label>
-      <label><input type="checkbox" value="AME ITAP">AME ITAP</label>
-      <label><input type="checkbox" value="H TIRADENTES">H TIRADENTES</label>
-      <label><input type="checkbox" value="H ITAIM">H ITAIM</label>
-      <label><input type="checkbox" value="AME PRADOS">AME PRADOS</label>
-    </div>
-
-    <input type="email" placeholder="E-mail" id="email">
-    <input type="text" placeholder="WhatsApp" id="whatsapp">
-
-    <label class="date-label" for="dataNascimento">Data de Nascimento</label>
-    <input type="date" id="dataNascimento">
-
-    <label class="date-label" for="dataEmissaoRg">Data de Expedição</label>
-    <input type="date" id="dataEmissaoRg">
-
-    <div class="upload-box">
-      <label for="arquivos">Anexe arquivos (PDF ou JPEG):</label>
-      <input type="file" id="arquivos" accept=".pdf,.jpg,.jpeg" multiple>
-      <div id="fileList"></div>
-    </div>
-
-    <button onclick="cadastrarHospitais()">Cadastrar</button>
-
-    <div class="admin-area">
-      <button onclick="mostrarSenha('hospitais')">Administrador</button>
-      <div id="senhaAreaHospitais" class="hidden">
-        <input type="password" id="senhaHospitais" placeholder="Senha">
-        <button onclick="baixarExcel('hospitais')">Download</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>&copy; 2025 Cadastro de Médicos. Todos os direitos reservados.</p>
-  </div>
-
   <script>
     const senhaCorreta = "1234";
     let dadosCadastro = [];
@@ -241,6 +6,118 @@
     function mostrarAba(aba) {
       document.getElementById("cadastro").classList.add("hidden");
       document.getElementById("hospitais").classList.add("hidden");
-      document.get
+      document.getElementById(aba).classList.remove("hidden");
 
+      // Atualiza as abas ativas visualmente
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      const tab = document.querySelector(`.tab[onclick="mostrarAba('${aba}')"]`);
+      if (tab) tab.classList.add('active');
+    }
 
+    function mostrarSenha(area) {
+      const senhaArea = document.getElementById("senhaArea" + capitalize(area));
+      if (senhaArea.classList.contains("hidden")) {
+        senhaArea.classList.remove("hidden");
+      } else {
+        senhaArea.classList.add("hidden");
+      }
+    }
+
+    function baixarExcel(area) {
+      const senha = document.getElementById("senha" + capitalize(area)).value;
+      if (senha !== senhaCorreta) {
+        alert("Senha incorreta.");
+        return;
+      }
+
+      let dados = area === "cadastro" ? dadosCadastro : dadosHospitais;
+
+      if (dados.length === 0) {
+        alert("Nenhum dado disponível para download.");
+        return;
+      }
+
+      const ws = XLSX.utils.json_to_sheet(dados);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Dados");
+
+      XLSX.writeFile(wb, `dados_${area}.xlsx`);
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function cadastrarHospitais() {
+      // Coleta os dados dos dois formulários
+      const nome = document.getElementById("nome").value;
+      const crm = document.getElementById("crm").value;
+      const endereco = document.getElementById("endereco").value;
+      const cep = document.getElementById("cep").value;
+      const codigoBanco = document.getElementById("codigo").value;
+      const agencia = document.getElementById("agencia").value;
+      const nomeBanco = document.getElementById("banco").value;
+      const email = document.getElementById("email").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const dataNascimento = document.getElementById("dataNascimento").value;
+      const dataEmissaoRg = document.getElementById("dataEmissaoRg").value;
+      const hospitais = Array.from(document.querySelectorAll('#hospitais input[type="checkbox"]:checked')).map(cb => cb.value);
+
+      if (!nome || !crm || !email) {
+        alert("Por favor, preencha nome, CRM e e-mail.");
+        return;
+      }
+
+      const dados = {
+        nome,
+        crm,
+        endereco,
+        cep,
+        codigoBanco,
+        agencia,
+        nomeBanco,
+        email,
+        whatsapp,
+        dataNascimento,
+        dataEmissaoRg,
+        hospitais: hospitais.join(", ")
+      };
+
+      // Envia para o Google Script
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Erro ao enviar dados");
+        return res.text();
+      })
+      .then(data => {
+        alert("Cadastro enviado com sucesso!");
+        dadosHospitais.push(dados);
+        limparFormulario();
+      })
+      .catch(err => {
+        console.error("Erro:", err);
+        alert("Erro ao enviar dados.");
+      });
+    }
+
+    function limparFormulario() {
+      document.querySelectorAll("input").forEach(i => i.value = "");
+      document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+    }
+
+    document.getElementById("arquivos").addEventListener("change", function () {
+      const lista = document.getElementById("fileList");
+      lista.innerHTML = "";
+      for (const file of this.files) {
+        const item = document.createElement("div");
+        item.textContent = file.name;
+        lista.appendChild(item);
+      }
+    });
+  </script>
+</body>
+</html>
