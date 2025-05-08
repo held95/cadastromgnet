@@ -1,6 +1,6 @@
 body {
-  background-color: #f4f7fc;
-  font-family: 'Roboto', sans-serif;
+  background-color: #009961;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,141 +11,78 @@ body {
 .form-container {
   background: white;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   width: 350px;
-  max-width: 100%;
 }
 
 .form-container h2 {
   text-align: center;
-  font-size: 24px;
-  color: #2c3e50;
-  margin-bottom: 20px;
 }
 
 input {
   width: 100%;
-  margin: 12px 0;
-  padding: 14px;
-  border: 1px solid #ddd;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-input:focus {
-  border-color: #1abc9c;
-  outline: none;
 }
 
 button {
-  background-color: #1abc9c;
+  background-color: #009961;
   color: white;
-  padding: 15px;
+  padding: 12px;
   border: none;
   width: 100%;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-}
-
-button:hover {
-  background-color: #16a085;
+  margin-top: 10px;
 }
 
 .tabs {
   display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .tab {
-  padding: 15px;
-  background-color: #fff;
+  flex: 1;
+  padding: 10px;
+  background-color: #eee;
   text-align: center;
   cursor: pointer;
   border-radius: 8px 8px 0 0;
-  border: 1px solid #ddd;
-  font-weight: 500;
-  font-size: 18px;
-  margin: 0 20px;
-  transition: background-color 0.3s;
-}
-
-.tab:hover {
-  background-color: #1abc9c;
-  color: white;
+  border: 1px solid #ccc;
 }
 
 .tab.active {
-  background-color: #1abc9c;
-  color: white;
+  background-color: white;
   font-weight: bold;
   border-bottom: none;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
 }
 
 .checkbox-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
 }
 
 .checkbox-group label {
   background: #f2f2f2;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   font-size: 14px;
-}
-
-.checkbox-group input {
-  margin-right: 10px;
-}
-
-.footer {
-  background-color: #2c3e50;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 40px;
-  font-size: 14px;
-}
-
-.upload-box {
-  margin: 20px 0;
-  padding: 20px;
-  border: 2px dashed #1abc9c;
-  border-radius: 10px;
-  background-color: #ecf9f8;
-  text-align: center;
-  transition: 0.3s;
-}
-
-.upload-box:hover {
-  background-color: #d1f3ed;
-}
-
-.upload-box input[type="file"] {
-  display: block;
-  margin: 10px auto;
-}
-
-#fileList {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #2c3e50;
-}
-
-.date-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 500;
-  font-size: 16px;
 }
 
