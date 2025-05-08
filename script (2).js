@@ -31,3 +31,20 @@ function cadastrar() {
   document.querySelectorAll("input").forEach(el => el.value = "");
   document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 }
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+
+  sheet.appendRow([
+    data.nome,
+    data.email,
+    data.telefone,
+    data.especialidade,
+    data.localDeAtendimento
+  ]);
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ status: 'success', message: 'Dados recebidos com sucesso!' })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
