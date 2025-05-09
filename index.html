@@ -1,27 +1,4 @@
 <!DOCTYPE html>
-<form id="cadastro">
-  <input type="text" name="nome" placeholder="Nome" required />
-  <input type="email" name="email" placeholder="Email" required />
-  <input type="tel" name="telefone" placeholder="Telefone" required />
-  <button type="submit">Cadastrar</button>
-</form>
-
-<script>
-document.getElementById("cadastro").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const dados = Object.fromEntries(new FormData(e.target));
-  
-  fetch("https://script.google.com/macros/s/AKfycbz5uOyPo1g3QFtlO1_j1Qhb6pdUasqR0hQgjet0Yw8Wpx-cul2XZSPotiaoX1gGpXtiPw/exec", {
-    method: "POST",
-    body: JSON.stringify(dados)
-  })
-  .then(res => res.text())
-  .then(msg => alert("Sucesso!"))
-  .catch(err => alert("Erro no envio"));
-});
-</script>
-
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -320,13 +297,6 @@ document.getElementById("cadastro").addEventListener("submit", function(e) {
       const files = this.files;
       const fileList = document.getElementById("fileList");
       fileList.innerHTML = "";
-      for (let i = 0; i < files.length; i++) {
-        fileList.innerHTML += `<p>${files[i].name}</p>`;
-      }
-    });
-  </script>
-
-</body>
-</html>
+      for (let i = 0; i < files.length
 
 
