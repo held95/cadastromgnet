@@ -239,10 +239,14 @@
     let dadosHospitais = [];
 
     function mostrarAba(aba) {
+      // Esconde todas as abas
       document.getElementById("cadastro").classList.add("hidden");
       document.getElementById("hospitais").classList.add("hidden");
+
+      // Mostra a aba selecionada
       document.getElementById(aba).classList.remove("hidden");
 
+      // Altera o estilo das abas
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove("active"));
       const index = aba === "cadastro" ? 0 : 1;
       document.querySelectorAll('.tab')[index].classList.add("active");
@@ -297,6 +301,12 @@
       const files = this.files;
       const fileList = document.getElementById("fileList");
       fileList.innerHTML = "";
-      for (let i = 0; i < files.length
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        fileList.innerHTML += `<p>${file.name}</p>`;
+      }
+    });
+  </script>
 
-
+</body>
+</html>
