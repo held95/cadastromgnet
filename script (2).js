@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsEiSqcEQ6LPKvFPJybpNL9BKaCHxRFnsVwkp9OKJd/dev";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz5uOyPo1g3QFtlO1_j1Qhb6pdUasqR0hQgjet0Yw8Wpx-cul2XZSPotiaoX1gGpXtiPw/exec";
 
 function cadastrarHospitais() {
   const data = {
