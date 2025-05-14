@@ -1,109 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Médicos e Hospitais</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Médicos</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
       padding: 20px;
     }
-
-    .container {
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
       max-width: 600px;
       margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
+      font-weight: bold;
     }
-
-    input, select, button {
+    input, select {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
-
-    .footer {
+    button {
       margin-top: 20px;
-      text-align: center;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #45a049;
     }
 
-    /* Estilo do modal */
-    #modalTermo {
+    /* Modal styles */
+    .modal {
       display: none;
       position: fixed;
-      top: 0;
+      z-index: 1000;
       left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 1000;
+      background-color: rgba(0,0,0,0.5);
       justify-content: center;
       align-items: center;
     }
-
-    #modalTermo .modal-content {
-      background: white;
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
       border-radius: 10px;
-      width: 90%;
-      max-width: 600px;
-      padding: 20px;
-      position: relative;
+      max-width: 500px;
+      text-align: center;
+    }
+    .modal-content iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      margin-bottom: 15px;
+    }
+    .modal-content label {
+      display: inline-block;
+      margin: 10px 0;
+      font-weight: normal;
     }
   </style>
 </head>
 <body>
+  <h1>Cadastro de Médicos</h1>
+  <form id="cadastroForm">
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" required />
 
-  <div class="container">
-    <h2>Cadastro de Médicos e Hospitais</h2>
+    <label for="especialidade">Especialidade</label>
+    <input type="text" id="especialidade" required />
 
-    <form id="cadastroForm">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" required>
+    <label for="hospital">Hospital</label>
+    <input type="text" id="hospital" required />
 
-      <label for="especialidade">Especialidade:</label>
-      <input type="text" id="especialidade" required>
+    <label for="cidade">Cidade</label>
+    <input type="text" id="cidade" required />
 
-      <label for="hospital">Hospital:</label>
-      <input type="text" id="hospital" required>
+    <label for="telefone">Telefone</label>
+    <input type="text" id="telefone" required />
 
-      <label for="cidade">Cidade:</label>
-      <input type="text" id="cidade" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" required />
 
-      <label for="telefone">Telefone:</label>
-      <input type="text" id="telefone" required>
+    <label for="tipo">Tipo</label>
+    <select id="tipo" required>
+      <option value="">Selecione</option>
+      <option value="CLT">CLT</option>
+      <option value="PJ">PJ</option>
+    </select>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" required>
+    <button type="button" onclick="abrirModal()">Cadastrar</button>
+  </form>
 
-      <label for="tipo">Tipo de vínculo:</label>
-      <select id="tipo" required>
-        <option value="">Selecione</option>
-        <option value="CLT">CLT</option>
-        <option value="PJ">PJ</option>
-        <option value="Outros">Outros</option>
-      </select>
-
-      <div class="footer">
-        <button type="button" onclick="abrirModal()">Cadastrar</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Modal com termo de contrato -->
-  <div id="modalTermo">
+  <!-- Modal -->
+  <div class="modal" id="modalTermo">
     <div class="modal-content">
-      <h3 style="text-align:center;">Termo de Contrato</h3>
-      <iframe src="/termo_contrato.pdf" style="width:100%; height:400px; border:none;"></iframe>
-      <div style="margin-top:15px;">
-        <label><input type="checkbox" id="aceitoTermo"> Aceito os termos de contrato</label>
-      </div>
-      <div style="text-align:center; margin-top:20px;">
-        <button onclick="confirmarCadastro()">Cadastrar</button>
-        <button onclick="fecharModal()" style="margin-left: 10px; background-color: #ccc; color: black;">Cancelar</button>
-      </div>
+      <h3>Termo de Contrato</h3>
+      <iframe src="https://cadastromgnet.vercel.app/ESTATUTO.pdf"></iframe>
+      <label><input type="checkbox" id="aceitoTermo" /> Aceito os termos de contrato</label><br/>
+      <button onclick="confirmarCadastro()">Confirmar Cadastro</button>
+      <button onclick="fecharModal()" style="background: #ccc; margin-left: 10px;">Cancelar</button>
     </div>
   </div>
 
@@ -141,8 +158,6 @@
       }
 
       alert("Cadastro realizado com sucesso!");
-
-      // Aqui você pode integrar com backend ou Google Apps Script
       document.getElementById("cadastroForm").reset();
     }
   </script>
