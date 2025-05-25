@@ -123,6 +123,16 @@
     color: white;
   }
 
+  .lgpd {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+  }
+
+  .lgpd input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
   .hidden {
     display: none;
   }
@@ -158,6 +168,14 @@
   <div id="cadastro" class="form-container">
     <h2>Cadastro de Médicos</h2>
     <input type="text" name="Nome" placeholder="Nome" required>
+    <input type="text" name="RG" placeholder="RG" required>
+    <input type="text" name="CPF" placeholder="CPF" required>
+
+    <div class="lgpd">
+      <input type="checkbox" name="Consentimento LGPD" required>
+      <label>Consentimento de Acordo com a LGPD (Lei Geral de Proteção de Dados Pessoais)</label>
+    </div>
+
     <input type="text" name="CRM" placeholder="CRM" required>
     <input type="text" name="Endereço" placeholder="Endereço">
     <input type="text" name="CEP" placeholder="CEP">
@@ -188,20 +206,23 @@
       <input type="checkbox" id="HGP" name="Hospitais" value="HGP">
       <label for="HGP">HGP</label>
 
-      <input type="checkbox" id="PEDRE" name="Hospitais" value="PEDRE">
-      <label for="PEDRE">PEDRE</label>
+      <input type="checkbox" id="HGG" name="Hospitais" value="HGG">
+      <label for="HGG">HGG</label>
+
+      <input type="checkbox" id="PEDREIRA" name="Hospitais" value="PEDREIRA">
+      <label for="PEDREIRA">PEDREIRA</label>
 
       <input type="checkbox" id="REDEHC" name="Hospitais" value="REDE HC">
       <label for="REDEHC">REDE HC</label>
 
-      <input type="checkbox" id="AMECARAP" name="Hospitais" value="AME CARAP">
-      <label for="AMECARAP">AME CARAP</label>
+      <input type="checkbox" id="SOROCABA" name="Hospitais" value="SOROCABA">
+      <label for="SOROCABA">SOROCABA</label>
 
       <input type="checkbox" id="HMULHER" name="Hospitais" value="H MULHER">
       <label for="HMULHER">H MULHER</label>
 
-      <input type="checkbox" id="HUSBC" name="Hospitais" value="HU SBC">
-      <label for="HUSBC">HU SBC</label>
+      <input type="checkbox" id="CEJAM" name="Hospitais" value="CEJAM">
+      <label for="CEJAM">CEJAM</label>
 
       <input type="checkbox" id="MBOI" name="Hospitais" value="M BOI">
       <label for="MBOI">M BOI</label>
