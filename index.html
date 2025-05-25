@@ -72,13 +72,6 @@
     outline: none;
   }
 
-  input[type="date"] {
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: #fff;
-    position: relative;
-  }
-
   button {
     background-color: #1abc9c;
     color: white;
@@ -123,16 +116,6 @@
     color: white;
   }
 
-  .lgpd {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
-  }
-
-  .lgpd input[type="checkbox"] {
-    margin-right: 10px;
-  }
-
   .hidden {
     display: none;
   }
@@ -152,6 +135,29 @@
     font-weight: 500;
     font-size: 16px;
   }
+
+  .lgpd-box {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .lgpd-box input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-size: 20px;
+  }
 </style>
 </head>
 
@@ -162,7 +168,7 @@
   <div class="tab" onclick="mostrarAba('hospitais')">Hospitais</div>
 </div>
 
-<form action="https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd" method="POST">
+<form id="formulario" action="https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd" method="POST">
 
   <!-- Aba de Cadastro -->
   <div id="cadastro" class="form-container">
@@ -171,9 +177,9 @@
     <input type="text" name="RG" placeholder="RG" required>
     <input type="text" name="CPF" placeholder="CPF" required>
 
-    <div class="lgpd">
-      <input type="checkbox" name="Consentimento LGPD" required>
-      <label>Consentimento de Acordo com a LGPD (Lei Geral de Proteção de Dados Pessoais)</label>
+    <div class="lgpd-box">
+      <input type="checkbox" id="lgpd" name="Consentimento LGPD" value="Aceito" required>
+      <label for="lgpd">Consentimento de Acordo com a LGPD</label>
     </div>
 
     <input type="text" name="CRM" placeholder="CRM" required>
@@ -206,17 +212,14 @@
       <input type="checkbox" id="HGP" name="Hospitais" value="HGP">
       <label for="HGP">HGP</label>
 
-      <input type="checkbox" id="HGG" name="Hospitais" value="HGG">
-      <label for="HGG">HGG</label>
-
       <input type="checkbox" id="PEDREIRA" name="Hospitais" value="PEDREIRA">
-      <label for="PEDREIRA">PEDREIRA</label>
+      <label for="PEDREIRA">Pedreira</label>
 
       <input type="checkbox" id="REDEHC" name="Hospitais" value="REDE HC">
       <label for="REDEHC">REDE HC</label>
 
       <input type="checkbox" id="SOROCABA" name="Hospitais" value="SOROCABA">
-      <label for="SOROCABA">SOROCABA</label>
+      <label for="SOROCABA">Sorocaba</label>
 
       <input type="checkbox" id="HMULHER" name="Hospitais" value="H MULHER">
       <label for="HMULHER">H MULHER</label>
@@ -238,6 +241,9 @@
 
       <input type="checkbox" id="AMEPRADOS" name="Hospitais" value="AME PRADOS">
       <label for="AMEPRADOS">AME PRADOS</label>
+
+      <input type="checkbox" id="HGG" name="Hospitais" value="HGG">
+      <label for="HGG">HGG</label>
     </div>
 
     <input type="email" name="Email" placeholder="E-mail" required>
@@ -247,10 +253,9 @@
   </div>
 </form>
 
-<div id="mensagem-sucesso" class="form-container hidden">
-  <h2>✅ Cadastro realizado com sucesso!</h2>
-  <p>Obrigado por se cadastrar. Seus dados foram enviados com sucesso.</p>
-  <button onclick="window.location.reload()">Novo Cadastro</button>
+<div id="mensagemSucesso" class="success-message hidden">
+  <p>✅ Cadastro realizado com sucesso!</p>
+  <button onclick="novoCadastro()">Novo Cadastro</button>
 </div>
 
 <div class="footer">
@@ -261,7 +266,6 @@
   function mostrarAba(aba) {
     document.getElementById("cadastro").classList.add("hidden");
     document.getElementById("hospitais").classList.add("hidden");
-    document.getElementById("mensagem-sucesso").classList.add("hidden");
 
     document.getElementById(aba).classList.remove("hidden");
 
@@ -272,29 +276,32 @@
     }
   }
 
-  const form = document.querySelector('form');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
+  // Envio do formulário com mensagem de sucesso
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
 
+    const form = e.target;
     const formData = new FormData(form);
 
     fetch(form.action, {
-      method: form.method,
+      method: "POST",
       body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        form.style.display = 'none';
-        document.getElementById('mensagem-sucesso').classList.remove('hidden');
-      } else {
-        alert('Ocorreu um erro ao enviar seu cadastro. Tente novamente.');
-      }
-    }).catch(() => {
-      alert('Erro de conexão. Verifique sua internet.');
+    })
+    .then(() => {
+      form.classList.add("hidden");
+      document.getElementById("mensagemSucesso").classList.remove("hidden");
+    })
+    .catch(() => {
+      alert("Houve um erro ao enviar. Tente novamente.");
     });
   });
+
+  function novoCadastro() {
+    document.getElementById("formulario").reset();
+    document.getElementById("formulario").classList.remove("hidden");
+    document.getElementById("mensagemSucesso").classList.add("hidden");
+    mostrarAba('cadastro');
+  }
 </script>
 
 </body>
