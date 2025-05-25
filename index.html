@@ -2,198 +2,195 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro de Médicos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Médicos e Hospitais</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #f4f7fc;
-      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      color: #333;
     }
-
     .tabs {
       display: flex;
       justify-content: center;
-      background: #2c3e50;
-      color: white;
-      padding: 20px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background-color: #2c3e50;
     }
-
     .tab {
-      margin: 0 30px;
+      padding: 15px 30px;
       cursor: pointer;
-      font-weight: 500;
-      font-size: 18px;
-      transition: all 0.3s ease;
-    }
-
-    .tab:hover {
-      color: #1abc9c;
-    }
-
-    .active {
-      border-bottom: 3px solid #1abc9c;
-      padding-bottom: 10px;
-    }
-
-    .form-container {
-      background: white;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 700px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    input[type="text"], input[type="password"], input[type="date"], input[type="email"], input[type="tel"] {
-      width: 100%;
-      margin: 12px 0;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #1abc9c;
+      color: white;
+      background-color: #2c3e50;
+      border: none;
       outline: none;
+      transition: background-color 0.3s;
     }
-
+    .tab:hover {
+      background-color: #34495e;
+    }
+    .tab.active {
+      background-color: #1abc9c;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
     button {
       background-color: #1abc9c;
       color: white;
-      padding: 15px;
+      padding: 12px 20px;
       border: none;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 18px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      margin-top: 20px;
+      width: 100%;
+      font-size: 16px;
     }
-
     button:hover {
       background-color: #16a085;
     }
-
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin: 15px 0;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-    }
-
     .hidden {
       display: none;
     }
-
     .footer {
+      text-align: center;
+      padding: 10px;
       background-color: #2c3e50;
       color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    label.date-label {
-      display: block;
-      margin-top: 15px;
-      font-weight: 500;
-      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
   <div class="tabs">
-    <div class="tab active" onclick="mostrarAba('cadastro')">Cadastros</div>
-    <div class="tab" onclick="mostrarAba('hospitais')">Hospitais</div>
+    <div class="tab active" onclick="mostrarAba('cadastro')">Cadastro Médico</div>
+    <div class="tab" onclick="mostrarAba('hospitais')">Cadastro Hospital</div>
   </div>
 
-  <form action="https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd" method="POST">
+  <!-- Aba de Cadastro de Médico -->
+  <div id="cadastro" class="form-container">
+    <h2>Cadastro de Médico</h2>
+    <form action="https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd" method="post">
+      <label>Nome do Médico</label>
+      <input type="text" name="Nome do Médico" required>
 
-    <!-- Aba de Cadastro -->
-    <div id="cadastro" class="form-container">
-      <h2>Cadastro de Médicos</h2>
-      <input type="text" name="Nome" placeholder="Nome" required>
-      <input type="text" name="CRM" placeholder="CRM" required>
-      <input type="text" name="Endereço" placeholder="Endereço">
-      <input type="text" name="CEP" placeholder="CEP">
-      <input type="text" name="Código do Banco" placeholder="Código do Banco">
-      <input type="text" name="Agência" placeholder="Agência">
-      <input type="text" name="Banco" placeholder="Nome do Banco">
-      <button type="button" onclick="mostrarAba('hospitais')">Próximo</button>
-    </div>
+      <label>Especialidade</label>
+      <input type="text" name="Especialidade" required>
 
-    <!-- Aba de Hospitais -->
-    <div id="hospitais" class="form-container hidden">
-      <h2>Hospitais</h2>
+      <label>CRM</label>
+      <input type="text" name="CRM" required>
 
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="Hospitais" value="OMED">OMED</label>
-        <label><input type="checkbox" name="Hospitais" value="HMB">HMB</label>
-        <label><input type="checkbox" name="Hospitais" value="HGP">HGP</label>
-        <label><input type="checkbox" name="Hospitais" value="PEDRE">PEDRE</label>
-        <label><input type="checkbox" name="Hospitais" value="REDE HC">REDE HC</label>
-        <label><input type="checkbox" name="Hospitais" value="AME CARAP">AME CARAP</label>
-        <label><input type="checkbox" name="Hospitais" value="H MULHER">H MULHER</label>
-        <label><input type="checkbox" name="Hospitais" value="HU SBC">HU SBC</label>
-        <label><input type="checkbox" name="Hospitais" value="M BOI">M BOI</label>
-        <label><input type="checkbox" name="Hospitais" value="AME ITAP">AME ITAP</label>
-        <label><input type="checkbox" name="Hospitais" value="H TIRADENTES">H TIRADENTES</label>
-        <label><input type="checkbox" name="Hospitais" value="H ITAIM">H ITAIM</label>
-        <label><input type="checkbox" name="Hospitais" value="AME PRADOS">AME PRADOS</label>
-      </div>
+      <label>Telefone</label>
+      <input type="text" name="Telefone" required>
 
-      <input type="email" name="Email" placeholder="E-mail" required>
-      <input type="tel" name="WhatsApp" placeholder="WhatsApp" required>
-
-      <label class="date-label">Data de Nascimento</label>
-      <input type="date" name="Data de Nascimento">
-
-      <label class="date-label">Data de Expedição do RG</label>
-      <input type="date" name="Data de Expedição RG">
+      <label>Hospital que Trabalha</label>
+      <input type="text" name="Hospital" required>
 
       <button type="submit">Cadastrar</button>
-    </div>
-  </form>
+    </form>
+  </div>
+
+  <!-- Aba de Cadastro de Hospital -->
+  <div id="hospitais" class="form-container hidden">
+    <h2>Cadastro de Hospital</h2>
+    <form action="https://api.sheetmonkey.io/form/SEU_CÓDIGO_AQUI" method="post">
+      <label>Nome do Hospital</label>
+      <input type="text" name="Nome do Hospital" required>
+
+      <label>Endereço</label>
+      <input type="text" name="Endereço" required>
+
+      <label>Telefone</label>
+      <input type="text" name="Telefone" required>
+
+      <label>Tipo</label>
+      <select name="Tipo" required>
+        <option value="">Selecione</option>
+        <option value="Público">Público</option>
+        <option value="Privado">Privado</option>
+        <option value="Misto">Misto</option>
+      </select>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
+
+  <!-- Mensagem de Sucesso -->
+  <div id="mensagem-sucesso" class="form-container hidden">
+    <h2>✅ Cadastro realizado com sucesso!</h2>
+    <p>Obrigado! Seus dados foram enviados corretamente.</p>
+    <button onclick="window.location.reload()">Novo Cadastro</button>
+  </div>
 
   <div class="footer">
-    <p>&copy; 2025 Cadastro de Médicos. Todos os direitos reservados.</p>
+    <p>&copy; 2025 Cadastro de Médicos e Hospitais</p>
   </div>
 
   <script>
     function mostrarAba(aba) {
       document.getElementById("cadastro").classList.add("hidden");
       document.getElementById("hospitais").classList.add("hidden");
+      document.getElementById("mensagem-sucesso").classList.add("hidden");
 
       document.getElementById(aba).classList.remove("hidden");
 
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove("active"));
-      const index = aba === "cadastro" ? 0 : 1;
-      document.querySelectorAll('.tab')[index].classList.add("active");
+      const index = aba === "cadastro" ? 0 : (aba === "hospitais" ? 1 : -1);
+      if (index >= 0) {
+        document.querySelectorAll('.tab')[index].classList.add("active");
+      }
     }
+
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            form.style.display = 'none';
+            document.getElementById('mensagem-sucesso').classList.remove('hidden');
+          } else {
+            alert('Ocorreu um erro ao enviar seu cadastro. Tente novamente.');
+          }
+        }).catch(() => {
+          alert('Erro de conexão. Verifique sua internet.');
+        });
+      });
+    });
   </script>
 
 </body>
 </html>
+
 
