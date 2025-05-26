@@ -5,7 +5,7 @@
 <title>Cadastro de Médicos</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <script>
-  UPLOADCARE_PUBLIC_KEY = '5e1d448219881e1f1ea3'; // 🔥 Substituir pela sua Public Key do Uploadcare
+  UPLOADCARE_PUBLIC_KEY = '5e1d448219881e1f1ea3';
 </script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
@@ -163,6 +163,21 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     font-size: 20px;
   }
+
+  .uploadcare--widget__button {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .uploadcare--widget__button:hover {
+    background-color: #1abc9c !important;
+  }
+
 </style>
 </head>
 
@@ -211,6 +226,8 @@
       data-tabs="file url facebook gdrive dropbox instagram"
       data-image-shrink="1024x1024"
       data-preview-step="true"
+      data-locale="pt"
+      data-locale-translate="{'buttons.choose': 'Escolha os arquivos'}"
     />
 
     <button type="button" onclick="mostrarAba('hospitais')">Próximo</button>
@@ -294,7 +311,6 @@
     }
   }
 
-  // Envio do formulário com mensagem de sucesso
   document.getElementById("formulario").addEventListener("submit", function(e) {
     e.preventDefault();
 
