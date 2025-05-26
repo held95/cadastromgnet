@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <title>Cadastro de Médicos</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  UPLOADCARE_PUBLIC_KEY = '5e1d448219881e1f1ea3'; // 🔥 Substituir pela sua Public Key do Uploadcare
+</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
 <style>
   body {
     background-color: #f4f7fc;
@@ -56,7 +61,7 @@
     font-size: 24px;
   }
 
-  input[type="text"], input[type="password"], input[type="date"], input[type="email"], input[type="tel"] {
+  input[type="text"], input[type="password"], input[type="date"], input[type="email"], input[type="tel"], input[type="hidden"] {
     width: 100%;
     margin: 12px 0;
     padding: 14px;
@@ -194,6 +199,19 @@
 
     <label class="date-label">Data de Expedição do RG</label>
     <input type="date" name="Data de Expedição RG" required>
+
+    <label class="date-label">Upload de Documentos</label>
+    <input 
+      type="hidden"
+      role="uploadcare-uploader"
+      name="Arquivo"
+      data-crop="disabled"
+      data-clearable 
+      data-multiple 
+      data-tabs="file url facebook gdrive dropbox instagram"
+      data-image-shrink="1024x1024"
+      data-preview-step="true"
+    />
 
     <button type="button" onclick="mostrarAba('hospitais')">Próximo</button>
   </div>
