@@ -100,11 +100,15 @@
     margin-right: 10px;
   }
 
-  label.date-label {
+  label {
     display: block;
     margin-top: 15px;
     font-weight: 500;
     font-size: 16px;
+  }
+
+  .upload-block {
+    margin-bottom: 20px;
   }
 
   /* Login Overlay */
@@ -161,7 +165,7 @@
     padding: 10px 20px !important;
     font-size: 16px !important;
     margin-top: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
   }
 
   .uploadcare--widget__button:hover {
@@ -247,6 +251,8 @@
       <label for="lgpd">Consentimento de Acordo com a LGPD</label>
     </div>
 
+    <input type="text" name="Estado Civil" placeholder="Estado Civil">
+    <input type="text" name="Nome da Mãe" placeholder="Nome da Mãe">
     <input type="text" name="CRM" placeholder="CRM" required>
     <input type="text" name="Endereço" placeholder="Endereço">
     <input type="text" name="CEP" placeholder="CEP">
@@ -255,26 +261,82 @@
     <input type="text" name="Banco" placeholder="Nome do Banco">
     <input type="text" name="Pix" placeholder="Pix">
 
-    <label class="date-label">Data de Nascimento</label>
+    <label>Data de Nascimento</label>
     <input type="date" name="Data de Nascimento" required>
 
-    <label class="date-label">Data de Expedição do RG</label>
+    <label>Data de Expedição do RG</label>
     <input type="date" name="Data de Expedição RG" required>
 
-    <label class="date-label">Upload de Documentos</label>
-    <input 
-      type="hidden"
-      role="uploadcare-uploader"
-      name="Arquivo"
-      data-crop="disabled"
-      data-clearable 
-      data-multiple 
-      data-tabs="file url facebook gdrive dropbox instagram"
-      data-image-shrink="1024x1024"
-      data-preview-step="true"
-      data-locale="pt"
-      data-locale-translate="{'buttons.choose': 'Escolha os arquivos'}"
-    />
+    <!-- Upload de Documentos Individuais -->
+    <div class="upload-block">
+      <label>Foto 3x4</label>
+      <input type="hidden" role="uploadcare-uploader" name="Foto 3x4">
+    </div>
+
+    <div class="upload-block">
+      <label>RG</label>
+      <input type="hidden" role="uploadcare-uploader" name="RG Documento">
+    </div>
+
+    <div class="upload-block">
+      <label>Certidão de Casamento / Nascimento</label>
+      <input type="hidden" role="uploadcare-uploader" name="Certidão">
+    </div>
+
+    <div class="upload-block">
+      <label>Comprovante de Residência</label>
+      <input type="hidden" role="uploadcare-uploader" name="Comprovante de Residência">
+    </div>
+
+    <div class="upload-block">
+      <label>Diploma</label>
+      <input type="hidden" role="uploadcare-uploader" name="Diploma">
+    </div>
+
+    <div class="upload-block">
+      <label>CRQ</label>
+      <input type="hidden" role="uploadcare-uploader" name="CRQ">
+    </div>
+
+    <div class="upload-block">
+      <label>Certidão Ético-profissional</label>
+      <input type="hidden" role="uploadcare-uploader" name="Certidão Ético-profissional">
+    </div>
+
+    <div class="upload-block">
+      <label>Certidão de Quitação Atualizada</label>
+      <input type="hidden" role="uploadcare-uploader" name="Certidão de Quitação Atualizada">
+    </div>
+
+    <div class="upload-block">
+      <label>Foto do App de Dados Bancários (Ag, CC, PIX)</label>
+      <input type="hidden" role="uploadcare-uploader" name="Foto Dados Bancários">
+    </div>
+
+    <div class="upload-block">
+      <label>Certificado de ATLS</label>
+      <input type="hidden" role="uploadcare-uploader" name="Certificado de ATLS">
+    </div>
+
+    <div class="upload-block">
+      <label>Comprovante de Recolhimento de INSS</label>
+      <input type="hidden" role="uploadcare-uploader" name="INSS">
+    </div>
+
+    <div class="upload-block">
+      <label>Cartão do SUS</label>
+      <input type="hidden" role="uploadcare-uploader" name="Cartão do SUS">
+    </div>
+
+    <div class="upload-block">
+      <label>Currículo</label>
+      <input type="hidden" role="uploadcare-uploader" name="Currículo">
+    </div>
+
+    <div class="upload-block">
+      <label>Comprovante Vacina COVID</label>
+      <input type="hidden" role="uploadcare-uploader" name="Comprovante Vacina COVID">
+    </div>
 
     <input type="email" name="Email" placeholder="E-mail" required>
     <input type="tel" name="WhatsApp" placeholder="WhatsApp" required>
@@ -304,7 +366,7 @@
   }
 
   document.getElementById("formulario").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evita o envio padrão
+    event.preventDefault();
 
     const formData = new FormData(this);
 
