@@ -3,26 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Cadastro</title>
+
+<!-- Dropzone -->
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
+
+<!-- Fonte -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>
-  UPLOADCARE_PUBLIC_KEY = '5e1d448219881e1f1ea3';
-  UPLOADCARE_LOCALE = 'pt';
-  UPLOADCARE_LOCALE_TRANSLATIONS = {
-    buttons: {
-      choose: {
-        files: {
-          one: 'Escolha um arquivo',
-          other: 'Escolha arquivos'
-        },
-        images: {
-          one: 'Escolha uma imagem',
-          other: 'Escolha imagens'
-        }
-      }
-    }
-  };
-</script>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
 <style>
   * {
@@ -189,23 +176,6 @@
     display: none;
   }
 
-  /* UploadCare */
-  .uploadcare--widget__button {
-    background-color: #34495e !important;
-    color: white !important;
-    border-radius: 10px !important;
-    padding: 10px 24px !important;
-    font-size: 15px !important;
-    font-weight: 500;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    transition: background-color 0.3s;
-  }
-
-  .uploadcare--widget__button:hover {
-    background-color: #1abc9c !important;
-  }
-
   /* Modal de Sucesso */
   #successModal {
     display: none;
@@ -268,7 +238,7 @@
   </div>
 </div>
 
-<!-- Aba Principal -->
+<!-- Aba -->
 <div class="tabs">
   <div class="tab active">M&G</div>
 </div>
@@ -303,79 +273,12 @@
     <label>Data de Expedição do RG</label>
     <input type="date" name="Data de Expedição RG" required>
 
-    <!-- Upload de Documentos -->
-    <div class="upload-block">
-      <label>Foto 3x4</label>
-      <input type="hidden" role="uploadcare-uploader" name="Foto 3x4">
-    </div>
-
-    <div class="upload-block">
-      <label>RG</label>
-      <input type="hidden" role="uploadcare-uploader" name="RG Documento">
-    </div>
-
-    <div class="upload-block">
-      <label>Certidão de Casamento / Nascimento</label>
-      <input type="hidden" role="uploadcare-uploader" name="Certidão">
-    </div>
-
-    <div class="upload-block">
-      <label>Comprovante de Residência</label>
-      <input type="hidden" role="uploadcare-uploader" name="Comprovante de Residência">
-    </div>
-
-    <div class="upload-block">
-      <label>Diploma</label>
-      <input type="hidden" role="uploadcare-uploader" name="Diploma">
-    </div>
-
-    <div class="upload-block">
-      <label>CRQ</label>
-      <input type="hidden" role="uploadcare-uploader" name="CRQ">
-    </div>
-
-    <div class="upload-block">
-      <label>Certidão Ético-profissional</label>
-      <input type="hidden" role="uploadcare-uploader" name="Certidão Ético-profissional">
-    </div>
-
-    <div class="upload-block">
-      <label>Certidão de Quitação Atualizada</label>
-      <input type="hidden" role="uploadcare-uploader" name="Certidão de Quitação Atualizada">
-    </div>
-
-    <div class="upload-block">
-      <label>Foto do App de Dados Bancários (Ag, CC, PIX)</label>
-      <input type="hidden" role="uploadcare-uploader" name="Foto Dados Bancários">
-    </div>
-
-    <div class="upload-block">
-      <label>Certificado de ATLS</label>
-      <input type="hidden" role="uploadcare-uploader" name="Certificado de ATLS">
-    </div>
-
-    <div class="upload-block">
-      <label>Comprovante de Recolhimento de INSS</label>
-      <input type="hidden" role="uploadcare-uploader" name="INSS">
-    </div>
-
-    <div class="upload-block">
-      <label>Cartão do SUS</label>
-      <input type="hidden" role="uploadcare-uploader" name="Cartão do SUS">
-    </div>
-
-    <div class="upload-block">
-      <label>Currículo</label>
-      <input type="hidden" role="uploadcare-uploader" name="Currículo">
-    </div>
-
-    <div class="upload-block">
-      <label>Comprovante Vacina COVID</label>
-      <input type="hidden" role="uploadcare-uploader" name="Comprovante Vacina COVID">
-    </div>
-
     <input type="email" name="Email" placeholder="E-mail" required>
     <input type="tel" name="WhatsApp" placeholder="WhatsApp" required>
+
+    <!-- Upload de Documentos -->
+    <label>Documentos</label>
+    <div id="dropzone" class="dropzone"></div>
 
     <button type="submit">Cadastrar</button>
   </div>
@@ -390,43 +293,64 @@
 </div>
 
 <script>
+  // Validação do login
   function validarLogin() {
-    const user = document.getElementById("loginUser").value;
-    const password = document.getElementById("loginPassword").value;
+    const user = document.getElementById("loginUser").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
 
-    if (user === "admin" && password === "1234") {
+    if (user === "admin" && password === "123") {
       document.getElementById("loginOverlay").style.display = "none";
     } else {
       document.getElementById("errorMsg").style.display = "block";
     }
   }
 
-  document.getElementById("formulario").addEventListener("submit", function(event) {
-    event.preventDefault();
+  // Dropzone Configuração
+  Dropzone.autoDiscover = false;
+  const uploadedFiles = [];
+
+  const myDropzone = new Dropzone("#dropzone", {
+    url: "https://api.cloudinary.com/v1_1/dz4th0dhg/auto/upload",
+    paramName: "file",
+    maxFilesize: 10,
+    acceptedFiles: ".jpg,.png,.pdf,.jpeg,.doc,.docx",
+    addRemoveLinks: true,
+    autoProcessQueue: false,
+    params: {
+      upload_preset: "meu_preset"
+    },
+    init: function() {
+      this.on("success", function(file, response) {
+        uploadedFiles.push(response.secure_url);
+      });
+    }
+  });
+
+  // Envio do formulário
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
 
     const formData = new FormData(this);
+
+    uploadedFiles.forEach((url, index) => {
+      formData.append(`Arquivo ${index + 1}`, url);
+    });
 
     fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
       method: "POST",
       body: formData
     })
-    .then(response => {
-      if (response.ok) {
-        document.getElementById("successModal").style.display = "flex";
-      } else {
-        alert("Ocorreu um erro ao enviar.");
-      }
-    })
-    .catch(error => {
-      alert("Erro: " + error);
+    .then(() => {
+      document.getElementById("successModal").style.display = "flex";
     });
   });
 
-  document.getElementById("confirmBtn").addEventListener("click", function() {
-    document.getElementById("formulario").reset();
+  // Modal de sucesso
+  document.getElementById("confirmBtn").onclick = function() {
     document.getElementById("successModal").style.display = "none";
-    document.getElementById("loginOverlay").style.display = "flex";
-  });
+    document.getElementById("formulario").reset();
+    myDropzone.removeAllFiles();
+  };
 </script>
 
 </body>
