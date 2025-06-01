@@ -162,21 +162,23 @@
   document.getElementById("formulario").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    myDropzone.processQueue();
+    // Verifica se todos os uploads foram concluídos
+    if (myDropzone.getUploadingFiles().length > 0) {
+      alert("Por favor, aguarde o upload dos arquivos terminar antes de enviar.");
+      return;
+    }
 
-    myDropzone.on("queuecomplete", function() {
-      const formData = new FormData(document.getElementById("formulario"));
-      uploadedFiles.forEach((url, index) => {
-        formData.append(`Arquivo ${index + 1}`, url);
-      });
+    const formData = new FormData(document.getElementById("formulario"));
+    uploadedFiles.forEach((url, index) => {
+      formData.append(`Arquivo ${index + 1}`, url);
+    });
 
-      fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
-        method: "POST",
-        body: formData
-      })
-      .then(() => {
-        document.getElementById("successModal").style.display = "flex";
-      });
+    fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
+      method: "POST",
+      body: formData
+    })
+    .then(() => {
+      document.getElementById("successModal").style.display = "flex";
     });
   });
 
