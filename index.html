@@ -12,216 +12,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    background-color: #f0f4f8;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
-  .tabs {
-    display: flex;
-    justify-content: center;
-    background: #34495e;
-    color: white;
-    padding: 20px 0;
-  }
-
-  .tab {
-    margin: 0 30px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 20px;
-    transition: color 0.3s;
-  }
-
-  .tab:hover {
-    color: #1abc9c;
-  }
-
-  .active {
-    border-bottom: 3px solid #1abc9c;
-    padding-bottom: 10px;
-  }
-
-  .form-container {
-    background: white;
-    margin: 40px auto;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    width: 95%;
-    max-width: 900px;
-  }
-
-  h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    font-weight: 700;
-  }
-
-  input[type="text"],
-  input[type="password"],
-  input[type="date"],
-  input[type="email"],
-  input[type="tel"] {
-    width: 100%;
-    margin: 12px 0;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: border-color 0.3s;
-  }
-
-  input:focus {
-    border-color: #1abc9c;
-    outline: none;
-  }
-
-  button {
-    background-color: #1abc9c;
-    color: white;
-    padding: 16px;
-    border: none;
-    width: 100%;
-    border-radius: 12px;
-    font-size: 18px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s;
-  }
-
-  button:hover {
-    background-color: #16a085;
-  }
-
-  .lgpd-box {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-  }
-
-  .lgpd-box input[type="checkbox"] {
-    margin-right: 10px;
-  }
-
-  label {
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #34495e;
-  }
-
-  .upload-block {
-    background-color: #f9fbfd;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #e1e7ec;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-
-  /* Login Overlay */
-  .login-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(44, 62, 80, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  .login-box {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  }
-
-  .login-box h2 {
-    margin-bottom: 25px;
-    color: #2c3e50;
-  }
-
-  .login-box input {
-    width: 100%;
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-  }
-
-  .login-box button {
-    margin-top: 10px;
-  }
-
-  .error-msg {
-    color: red;
-    margin-top: 10px;
-    display: none;
-  }
-
-  /* Modal de Sucesso */
-  #successModal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(2px);
-    background-color: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-  }
-
-  #successModalContent {
-    background-color: #e6ffed;
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    text-align: center;
-    border: 2px solid #00c853;
-  }
-
-  #successModalContent h2 {
-    color: #00c853;
-    margin-bottom: 20px;
-  }
-
-  #confirmBtn {
-    background-color: #00c853;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-  }
-
-  #confirmBtn:hover {
-    background-color: #009624;
-  }
+  * { box-sizing: border-box; }
+  body { background-color: #f0f4f8; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
+  .tabs { display: flex; justify-content: center; background: #34495e; color: white; padding: 20px 0; }
+  .tab { margin: 0 30px; cursor: pointer; font-weight: 600; font-size: 20px; transition: color 0.3s; }
+  .tab:hover { color: #1abc9c; }
+  .active { border-bottom: 3px solid #1abc9c; padding-bottom: 10px; }
+  .form-container { background: white; margin: 40px auto; padding: 40px; border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); width: 95%; max-width: 900px; }
+  h2 { text-align: center; color: #2c3e50; margin-bottom: 30px; font-weight: 700; }
+  input[type="text"], input[type="password"], input[type="date"],
+  input[type="email"], input[type="tel"] { width: 100%; margin: 12px 0;
+    padding: 16px; border-radius: 12px; border: 1px solid #ccc; font-size: 16px;
+    transition: border-color 0.3s; }
+  input:focus { border-color: #1abc9c; outline: none; }
+  button { background-color: #1abc9c; color: white; padding: 16px; border: none;
+    width: 100%; border-radius: 12px; font-size: 18px; cursor: pointer;
+    font-weight: 600; transition: background-color 0.3s; }
+  button:hover { background-color: #16a085; }
+  .lgpd-box { display: flex; align-items: center; margin: 10px 0; }
+  .lgpd-box input[type="checkbox"] { margin-right: 10px; }
+  label { display: block; margin-top: 20px; margin-bottom: 8px; font-weight: 600;
+    font-size: 16px; color: #34495e; }
+  .upload-block { background-color: #f9fbfd; padding: 20px; border-radius: 16px;
+    border: 1px solid #e1e7ec; margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(44, 62, 80, 0.95); display: flex; justify-content: center;
+    align-items: center; z-index: 9999; }
+  .login-box { background: white; padding: 40px; border-radius: 20px; width: 90%;
+    max-width: 400px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+  .login-box h2 { margin-bottom: 25px; color: #2c3e50; }
+  .login-box input { width: 100%; padding: 14px; margin: 10px 0;
+    border-radius: 10px; border: 1px solid #ccc; }
+  .login-box button { margin-top: 10px; }
+  .error-msg { color: red; margin-top: 10px; display: none; }
+  #successModal { display: none; position: fixed; z-index: 10000; left: 0;
+    top: 0; width: 100%; height: 100%; backdrop-filter: blur(2px);
+    background-color: rgba(0,0,0,0.4); justify-content: center;
+    align-items: center; }
+  #successModalContent { background-color: #e6ffed; padding: 30px;
+    border-radius: 20px; width: 90%; max-width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); text-align: center;
+    border: 2px solid #00c853; }
+  #successModalContent h2 { color: #00c853; margin-bottom: 20px; }
+  #confirmBtn { background-color: #00c853; color: white; border: none;
+    padding: 12px 24px; border-radius: 10px; cursor: pointer;
+    font-size: 16px; font-weight: 600; transition: background-color 0.3s; }
+  #confirmBtn:hover { background-color: #009624; }
 </style>
 </head>
 
@@ -276,7 +114,6 @@
     <input type="email" name="Email" placeholder="E-mail" required>
     <input type="tel" name="WhatsApp" placeholder="WhatsApp" required>
 
-    <!-- Upload de Documentos -->
     <label>Documentos</label>
     <div id="dropzone" class="dropzone"></div>
 
@@ -293,11 +130,9 @@
 </div>
 
 <script>
-  // Validação do login
   function validarLogin() {
     const user = document.getElementById("loginUser").value.trim();
     const password = document.getElementById("loginPassword").value.trim();
-
     if (user === "admin" && password === "123") {
       document.getElementById("loginOverlay").style.display = "none";
     } else {
@@ -305,7 +140,6 @@
     }
   }
 
-  // Dropzone Configuração
   Dropzone.autoDiscover = false;
   const uploadedFiles = [];
 
@@ -315,7 +149,6 @@
     maxFilesize: 10,
     acceptedFiles: ".jpg,.png,.pdf,.jpeg,.doc,.docx",
     addRemoveLinks: true,
-    autoProcessQueue: false,
     params: {
       upload_preset: "meu_preset"
     },
@@ -326,30 +159,32 @@
     }
   });
 
-  // Envio do formulário
   document.getElementById("formulario").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const formData = new FormData(this);
+    myDropzone.processQueue();
 
-    uploadedFiles.forEach((url, index) => {
-      formData.append(`Arquivo ${index + 1}`, url);
-    });
+    myDropzone.on("queuecomplete", function() {
+      const formData = new FormData(document.getElementById("formulario"));
+      uploadedFiles.forEach((url, index) => {
+        formData.append(`Arquivo ${index + 1}`, url);
+      });
 
-    fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
-      method: "POST",
-      body: formData
-    })
-    .then(() => {
-      document.getElementById("successModal").style.display = "flex";
+      fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
+        method: "POST",
+        body: formData
+      })
+      .then(() => {
+        document.getElementById("successModal").style.display = "flex";
+      });
     });
   });
 
-  // Modal de sucesso
   document.getElementById("confirmBtn").onclick = function() {
     document.getElementById("successModal").style.display = "none";
     document.getElementById("formulario").reset();
     myDropzone.removeAllFiles();
+    uploadedFiles.length = 0;
   };
 </script>
 
