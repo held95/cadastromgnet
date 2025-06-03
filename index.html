@@ -288,6 +288,51 @@
       });
     });
   });
+document.getElementById("formulario").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const cpf = document.getElementById("cpf").value;
+  const rg = document.getElementById("rg").value;
+  const crm = document.getElementById("crm").value;
+
+  if (!validarCPF(cpf)) {
+    alert("CPF inválido.");
+    return;
+  }
+  if (!validarRG(rg)) {
+    alert("RG inválido.");
+    return;
+  }
+  if (!validarCRM(crm)) {
+    alert("CRM inválido.");
+    return;
+  }
+  const formData = new FormData(this);
+  const formObject = Object.fromEntries(formData.entries());
+
+  const templateParams = {
+    nome: formObject.Nome,
+    cpf: formObject.CPF,
+    rg: formObject.RG,
+    crm: formObject.CRM,
+    email: formObject.Email,
+    whatsapp: formObject.WhatsApp,
+    endereco: formObject.Endereço,
+    banco: formObject.Banco,
+    agencia: formObject.Agência,
+    pix: formObject.Pix,
+    documentos: uploadedFiles.join(', ') // URLs dos arquivos do Dropzone
+  };
+
+  emailjs.send("service_jsgij9b", "template_ioktwht", templateParams)
+    .then(function(response) {
+      console.log("SUCCESS!", response.status, response.text);
+      document.getElementById("successModal").style.display = "flex";
+    }, function(error) {
+      console.log("FAILED...", error);
+      alert("Erro ao enviar. Tente novamente.");
+    });
+});
 
   document.getElementById("confirmBtn").onclick = function() {
     document.getElementById("successModal").style.display = "none";
