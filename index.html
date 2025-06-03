@@ -341,6 +341,54 @@ document.getElementById("formulario").addEventListener("submit", function(e) {
     uploadedFiles.length = 0;
   };
 </script>
+<script>
+  // Envio do formulário
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
 
+    const cpf = document.getElementById("cpf").value;
+    const rg = document.getElementById("rg").value;
+    const crm = document.getElementById("crm").value;
+
+    if (!validarCPF(cpf)) {
+      alert("CPF inválido.");
+      return;
+    }
+    if (!validarRG(rg)) {
+      alert("RG inválido.");
+      return;
+    }
+    if (!validarCRM(crm)) {
+      alert("CRM inválido.");
+      return;
+    }
+
+    const form = new FormData(e.target);
+    const data = {};
+    form.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    // Adiciona os links dos arquivos
+    data["Arquivos"] = uploadedFiles.join(", ");
+
+    // Envia via EmailJS
+    emailjs.send("service_jsgij9b", "template_ioktwht", data)
+      .then(() => {
+        document.getElementById("successModal").style.display = "flex";
+      }, (error) => {
+        alert("Falha no envio: " + JSON.stringify(error));
+      });
+  });
+
+  // Botão do modal
+  document.getElementById("confirmBtn").addEventListener("click", function() {
+    document.getElementById("successModal").style.display = "none";
+    document.getElementById("formulario").reset();
+    myDropzone.removeAllFiles();
+  });
+</script>
+</body>
+</html>
 </body>
 </html>
