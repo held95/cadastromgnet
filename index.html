@@ -11,6 +11,7 @@
 <!-- Fonte -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+
 <style>
   * { box-sizing: border-box; }
   body { background-color: #f0f4f8; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
@@ -61,6 +62,8 @@
     font-size: 16px; font-weight: 600; transition: background-color 0.3s; }
   #confirmBtn:hover { background-color: #009624; }
 </style>
+
+
 </head>
 
 <body>
@@ -129,7 +132,13 @@
   </div>
 </div>
 
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
+  // Inicializar EmailJS
+  (function(){
+    emailjs.init("service_jsgij9b"); // Substituir pelo seu PUBLIC KEY do EmailJS
+  })();
+
   function validarLogin() {
     const user = document.getElementById("loginUser").value.trim();
     const password = document.getElementById("loginPassword").value.trim();
@@ -162,23 +171,43 @@
   document.getElementById("formulario").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    // Verifica se todos os uploads foram concluídos
     if (myDropzone.getUploadingFiles().length > 0) {
       alert("Por favor, aguarde o upload dos arquivos terminar antes de enviar.");
       return;
     }
 
-    const formData = new FormData(document.getElementById("formulario"));
+    const form = document.getElementById("formulario");
+    const formData = new FormData(form);
+
     uploadedFiles.forEach((url, index) => {
       formData.append(`Arquivo ${index + 1}`, url);
     });
 
+    // Enviar para SheetMonkey
     fetch("https://api.sheetmonkey.io/form/vbZYP354FHVGkFzhRNhtpd", {
       method: "POST",
       body: formData
     })
     .then(() => {
-      document.getElementById("successModal").style.display = "flex";
+      // Enviar Email
+      const nome = form.querySelector('input[name="Nome"]').value;
+      const email = form.querySelector('input[name="Email"]').value;
+
+      const emailParams = {
+        to_name: nome,
+        to_email: email,
+        message: `Olá ${nome}, seu cadastro foi realizado com sucesso!`,
+      };
+
+      emailjs.send('service_jsgij9b', 'template_ioktwht', emailParams)
+      .then(() => {
+        document.getElementById("successModal").style.display = "flex";
+      })
+      .catch(error => {
+        console.error("Erro ao enviar email:", error);
+        alert("Cadastro salvo, mas ocorreu um erro ao enviar o email.");
+        document.getElementById("successModal").style.display = "flex";
+      });
     });
   });
 
