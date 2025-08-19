@@ -194,16 +194,31 @@
   (function(){
     emailjs.init("public_wOBAS86kcTxkqA1yF");
   })();
+async function hash(text) {
+  const enc = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(digest))
+              .map(b => b.toString(16).padStart(2, "0"))
+              .join("");
+}
 
-  function validarLogin() {
-    const user = document.getElementById("loginUser").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
-    if (user === "admin" && password === "123") {
-      document.getElementById("loginOverlay").style.display = "none";
-    } else {
-      document.getElementById("errorMsg").style.display = "block";
-    }
+async function validarLogin() {
+  const user = document.getElementById("loginUser").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  // Calcula o hash da senha digitada
+  const hashPass = await hash(password);
+
+  // Usuário válido e hash da senha "130717"
+  const validUser = "admin";
+  const validPassHash = "9bd3c04ebc4c7e2f5e5139d1f11d1664f1776870b4802787ce6d7350a33f0fc1";
+
+  if (user === validUser && hashPass === validPassHash) {
+    document.getElementById("loginOverlay").style.display = "none";
+  } else {
+    document.getElementById("errorMsg").style.display = "block";
   }
+}
 
   // Preenchimento de Endereço via CEP
   document.getElementById("cep").addEventListener("blur", function() {
@@ -339,3 +354,4 @@
 
 </body>
 </html>
+
